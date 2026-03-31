@@ -5,7 +5,11 @@ const STORAGE_KEY = 'tipcalc-history';
 export function loadHistory(): CalculationRecord[] {
   const raw = localStorage.getItem(STORAGE_KEY);
   if (!raw) return [];
-  return JSON.parse(raw) as CalculationRecord[];
+  try {
+    return JSON.parse(raw) as CalculationRecord[];
+  } catch {
+    return [];
+  }
 }
 
 export function saveRecord(record: CalculationRecord): void {

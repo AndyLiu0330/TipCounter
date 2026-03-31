@@ -1,5 +1,5 @@
 {
-  "name": "feature-v1",
+  "name": "tipcalc-pro",
   "version": "1.0.0",
   "main": "index.js",
   "directories": {
@@ -17,6 +17,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@testing-library/dom": "^10.4.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },
