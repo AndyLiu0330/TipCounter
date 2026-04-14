@@ -1,72 +1,73 @@
-# Product Requirement Document: TipCalc Pro (Manual Edition)
+# Product Requirement Document: Manual TipCalc Pro
 
 ## 1. Product Objective
-**TipCalc Pro** is a high-speed, manual-entry utility designed for users who prefer precision and privacy over AI scanning. It allows users to manually input merchant names, bill amounts, and custom tip percentages to get instant splitting results without needing a camera or internet connection.
+**Manual TipCalc Pro** is a privacy-centric utility designed for users who prioritize speed and absolute data control.  the app ensures that financial data never leaves the device. It provides an ultra-fast, "input-first" interface for manual bill entry, precision tipping, and group splitting.
 
 ---
 
-## 2. Core Features
+## 2. Core Features (Manual-First)
 
-### 2.1 Manual Data Entry
-* **Merchant Tagging**: A dedicated text field at the top to enter the restaurant or shop name (e.g., "Starbucks" or "Friday Night Pizza").
-* **Quick-Type Pad**: A large, responsive numeric keypad for entering the **Subtotal** and **Tax** amounts manually.
-* **Default Focus**: Upon opening, the cursor automatically focuses on the "Bill Amount" field for immediate input.
+### 2.1 High-Speed Manual Entry
+* **Direct-to-Keypad**: Upon launch, the app focuses immediately on the "Subtotal" field with the numeric keypad active.
+* **Merchant Labeling**: A manual text field to name the entry (e.g., "UCR Dining" or "K-BBQ Night") for history tracking.
+* **Tactile Feedback**: Haptic vibrations on every keypress to confirm accurate input without needing to look constantly at the screen.
 
-### 2.2 Flexible Tipping Engine
-* **Tipping Presets**: Quick-action buttons for 10%, 15%, 18%, and 20%.
-* **Custom Percentage**: A slider or input box to enter any specific percentage (e.g., 12.5%).
-* **Flat Tip Amount**: An option to enter a fixed dollar amount (e.g., "Just give a $10 tip") instead of a percentage.
-* **The "Round Up" Feature**: A one-tap button that adjusts the tip amount so the **Grand Total** becomes a clean, whole number.
+### 2.2 Precision Tipping & Customization
+* **Custom Percentages**: A dedicated field for non-standard tips (e.g., 12.3% or 22%).
+* **Flat-Rate Tipping**: A toggle to switch from percentage-based tipping to a specific dollar amount.
+* **Smart Rounding**: A "Round Total" button that adjusts the tip dynamically so the final bill is a whole number (e.g., $45.67 \rightarrow$ $46.00).
 
-### 2.3 Advanced Bill Splitting
-* **Guest Counter**: A simple `+` / `-` toggle to set the number of people.
-* **Equal Split**: Real-time calculation of how much each individual owes.
-* **Copy & Share**: Generates a text summary for group chats:
-    > "Check at **[Merchant Name]**: Total is **$[X]**. Split between **[N]** people. Each owes **$[Z]**."
+### 2.3 Privacy-First Architecture
+* **Zero Network Calls**: The application operates entirely offline. No data is sent to external servers.
+* **No Image Logging**: Since no camera is used, there is zero risk of capturing sensitive data often found on receipts (e.g., partial credit card numbers or signatures).
 
-### 2.4 History & Archive
-* **Local Storage**: Saves every calculation locally on the device.
-* **Searchable Logs**: Users can search their history by Merchant Name or Date.
+### 2.4 Social Sharing (Local Generation)
+* **Text Summary Export**: Generates a clean, shareable string locally:
+    > **[Merchant Name]**
+    > Subtotal: $[X]
+    > Tip: $[Y]
+    > **Total: $[Z]**
+    > Each (of [N] people) owes: **$[Share]**
 
 ---
 
 ## 3. Mathematical Logic
 
-The application calculates the final breakdown using the following formulas:
+The application uses standard arithmetic to ensure 100% precision, avoiding the common OCR errors found in AI-based scanners:
 
-1.  **Tip Amount**:
-    $$\text{Tip} = \text{Subtotal} \times \text{Custom Tip \%}$$
-2.  **Grand Total**:
+1.  **Calculated Tip**:
+    $$\text{Tip} = \text{Subtotal} \times \left( \frac{\text{Tip \%}}{100} \right)$$
+2.  **Final Grand Total**:
     $$\text{Grand Total} = \text{Subtotal} + \text{Tax} + \text{Tip}$$
-3.  **Individual Share**:
-    $$\text{Per Person} = \frac{\text{Grand Total}}{\text{Number of People}}$$
+3.  **The Per-Person Split**:
+    $$\text{Share} = \frac{\text{Grand Total}}{\text{Number of People}}$$
 
 ---
 
-## 4. User Flow
+## 4. Technical Requirements
 
-1.  **Entry**: User opens the app and types the **Merchant Name** (optional) and **Subtotal**.
-2.  **Selection**: User taps a **Tip %** button or types a **Custom %/$**.
-3.  **Split**: User adjusts the **Number of People** if it's a group bill.
-4.  **Review**: The "Total" and "Per Person" amounts update instantly as numbers are typed.
-5.  **Action**: User taps **"Save"** to keep a record or **"Share"** to send the breakdown to friends.
+* **Offline Storage**: Use **SQLite** or **Hive** for a local-only database to store historical entries.
+* **Permissions**: **Zero permissions required.** The app will function without access to the Camera, Microphone, Location, or Internet.
+* **Security**: No external API keys or `.env` files are required for AI providers, significantly reducing the application's attack surface.
 
 ---
 
-## 5. Technical Requirements
+## 5. User Flow
 
-* **Platform**: Mobile-first (iOS/Android).
-* **Offline Mode**: 100% functional without an internet connection.
-* **Storage**: Lightweight local database (SQLite or shared preferences).
-* **UI/UX**: Minimalist design. The keyboard should never block the "Total Amount" display.
+1.  **Launch**: App opens directly to the numeric input screen.
+2.  **Input**: User enters the merchant name (optional), tax, and subtotal.
+3.  **Adjust**: User taps a preset percentage (15%, 18%, 20%) or enters a custom value/flat rate.
+4.  **Split**: User adjusts a slider or taps to set the number of people.
+5.  **Save/Share**: User saves the entry to local history or copies the summary to the clipboard.
 
 ---
 
-## 6. Comparison: Manual vs. Scan Mode
+## 6. Comparison: Manual vs. AI
 
-| Feature | AI Scan (Old) | Manual Entry (New) |
+| Factor | AI Scanning | Manual TipCalc Pro |
 | :--- | :--- | :--- |
-| **Speed** | Depends on AI processing | Instant |
-| **Accuracy** | 95-98% (varies by light) | 100% (User-controlled) |
-| **Privacy** | Uploads image to server | 100% On-device |
-| **Flexibility** | Fixed extraction | Fully customizable % and names |
+| **Data Privacy** | Images processed in Cloud | **100% Local (On-Device)** |
+| **Accuracy** | Subject to OCR/AI hallucination | **User-Validated Precision** |
+| **Speed** | 3-5 seconds (Network latency) | **Instant (<1s)** |
+| **Battery Life** | High (Camera + Data Upload) | **Negligible** |
+| **Connectivity** | Requires 4G/5G or Wi-Fi | **Works 100% Offline** |
