@@ -3,13 +3,26 @@ interface HeaderProps {
   onToggleTheme: () => void;
   onToggleHistory: () => void;
   showingHistory: boolean;
+  canInstall: boolean;
+  onInstall: () => void;
 }
 
-export default function Header({ theme, onToggleTheme, onToggleHistory, showingHistory }: HeaderProps) {
+export default function Header({ theme, onToggleTheme, onToggleHistory, showingHistory, canInstall, onInstall }: HeaderProps) {
   return (
     <header className="flex items-center justify-between py-4">
       <h1 className="text-xl font-bold tracking-tight">TipCalc Pro</h1>
       <div className="flex gap-2">
+        {canInstall && (
+          <button
+            onClick={onInstall}
+            className="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+            aria-label="Install app"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+            </svg>
+          </button>
+        )}
         <button
           onClick={onToggleTheme}
           className="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
