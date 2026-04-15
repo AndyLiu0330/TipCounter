@@ -43,6 +43,28 @@ Create a `.env` with your bot token, then:
 BOT_TOKEN=xxxxx npm run bot
 ```
 
+#### Example conversation
+
+Send `/tip` and the bot walks you through a step-by-step wizard:
+
+```
+You:  /tip
+Bot:  What's the subtotal? (e.g. 45.20)
+You:  20
+Bot:  Tax amount? (send 0 if none)
+You:  10
+Bot:  Tip percentage? (e.g. 18)
+You:  20
+Bot:  How many people are splitting?
+You:  5
+Bot:  Subtotal:  $20.00
+      Tax:      $10.00
+      Tip (20%): $4.00
+
+      Total:    $34.00
+      Per person (5): $6.80
+```
+
 ## Docker
 
 ```bash
